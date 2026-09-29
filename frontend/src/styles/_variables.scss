@@ -1,0 +1,110 @@
+$font-family: "Vazirmatn", sans-serif;
+$font-nastaliq: "IranNastaliq", serif;
+$font-fraunces: "Fraunces", serif;
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+$breakpoint-mobile: 576px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-wide: 1440px;
+
+:root {
+    --color-turquoise-50: #effbfa;
+    --color-turquoise-100: #d7f3f2;
+    --color-turquoise-200: #b0e7e5;
+    --color-turquoise-300: #7dd5d3;
+    --color-turquoise-400: #45bcbc;
+    --color-turquoise-500: #159a9c;
+    --color-turquoise-600: #0f8587;
+    --color-turquoise-700: #0c6b6d;
+    --color-turquoise-800: #095356;
+    --color-turquoise-900: #063d40;
+
+    --color-copper-50: #fff6f1;
+    --color-copper-100: #fce9dd;
+    --color-copper-200: #f7d0bb;
+    --color-copper-300: #f0b092;
+    --color-copper-400: #e68b68;
+    --color-copper-500: #c96a45;
+    --color-copper-600: #b55735;
+    --color-copper-700: #93442b;
+    --color-copper-800: #713321;
+    --color-copper-900: #52251a;
+
+    --color-gold-50: #fffbf2;
+    --color-gold-100: #fff3d6;
+    --color-gold-200: #f9e4ae;
+    --color-gold-300: #f0d080;
+    --color-gold-400: #e2b957;
+    --color-gold-500: #c9a24d;
+    --color-gold-600: #b58b36;
+    --color-gold-700: #92702a;
+    --color-gold-800: #6f541f;
+    --color-gold-900: #4d3a17;
+
+    --color-neutral-0: #ffffff;
+    --color-neutral-50: #faf8f3;
+    --color-neutral-100: #f3f0e9;
+    --color-neutral-200: #e5e1d8;
+    --color-neutral-300: #d4d0c6;
+    --color-neutral-400: #b8b3a8;
+    --color-neutral-500: #979187;
+    --color-neutral-600: #746f66;
+    --color-neutral-700: #56524b;
+    --color-neutral-800: #383631;
+    --color-neutral-900: #24231f;
+
+    --color-red-500: #f43f3f;
+
+    --color-background: var(--color-copper-50);
+    --color-text: var(--color-neutral-900);
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-20: 80px;
+    --space-24: 96px;
+
+    --radius-0: 0px;
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 999px;
+
+    --icon-xs: 12px;
+    --icon-sm: 16px;
+    --icon-md: 20px;
+    --icon-lg: 24px;
+    --icon-xl: 32px;
+    --icon-2xl: 40px;
+    --icon-3xl: 48px;
+
+    --stroke-1: 1px;
+    --stroke-2: 2px;
+    --stroke-3: 3px;
+
+    --shadow-sm: 0 2px 4px 0 rgb(0 0 0 / 10%);
+    --shadow-md: 0 4px 8px 0 rgb(0 0 0 / 12%);
+    --shadow-lg: 0 8px 16px 0 rgb(0 0 0 / 14%);
+    --shadow-xl: 0 12px 24px 0 rgb(0 0 0 / 16%);
+    --shadow-2xl: 0 16px 32px 0 rgb(0 0 0 / 26%);
+
+    --shadow-out-gold: 0 0 10px 5px rgb(181 139 54 / 20%);
+    --shadow-inner-copper: inset 0 5px 10px 0 rgb(181 87 53 / 50%);
+}
