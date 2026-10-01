@@ -5,38 +5,54 @@
       :key="tab.id"
       :icon="tab.icon"
       :label="tab.label"
-      :active="modelValue === tab.id"
-      @click="handleSelect(tab.id)"
+      :active="currentTab === tab.id"
+      @click="goTo(tab.id)"
     />
   </nav>
 </template>
 
 <script setup>
-import NavItem from "./NavItem.vue";
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import NavItem from '@/components/navigation/NavItem.vue'
 
-const props = defineProps({
-
-    tabs: {
+defineProps({
+  tabs: {
     type: Array,
     required: true,
   },
-
-  modelValue: {
-    type: String,
-    default: "",
-  },
-
   className: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 
-const emit = defineEmits(["update:modelValue"]);
+const route = useRoute()
+const router = useRouter()
 
-const handleSelect = (id) => {
-  emit("update:modelValue", id);
-};
+const currentTab = computed(() => {
+  if (route.name === 'login' || route.name === 'account') {
+    return 'account'
+  }
+  return route.name
+})
+
+const auth = useAuthStore()
+
+function goTo(tabId) {
+  if (tabId === 'account') {
+    if (!auth.isLoggedIn) {
+      router.push({ name: 'login' })
+    }
+    else {
+      router.push({ name: 'account' })
+    }
+    return
+  }
+  if (route.name === tabId) return
+  router.push({ name: tabId })
+}
 </script>
 
 <style scoped lang="scss">
@@ -54,10 +70,13 @@ const handleSelect = (id) => {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
   border-top: var(--stroke-1) solid var(--color-turquoise-300);
   width: 100%;
   height: var(--bottom-nav-height);
   padding-inline: var(--bottom-nav-padding-inline);
   background-color: var(--bottom-nav-bg);
+
+  padding-bottom: env(safe-area-inset-bottom);
 }
 </style>
