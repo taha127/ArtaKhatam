@@ -2,15 +2,7 @@
   <div class="search-view">
     <!-- Head -->
     <div class="search-view__head">
-      <button
-        type="button"
-        class="search-view__back-btn"
-        aria-label="بستن جستجو"
-        @click="handleClose"
-      >
-        <ArrowRight class="search-view__back-icon" aria-hidden="true" />
-      </button>
-
+      <BackBtn />
       <Input
         variant="search"
         placeholder="جستجو در همه آثار"
@@ -44,14 +36,13 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import Input from '@/components/common/Input.vue'
 import SearchSection from '@/components/search/SearchSection.vue'
 import Chip from '@/components/search/Chip.vue'
 import PromoBanner from '@/components/search/PromoBanner.vue'
-import { ArrowRight, TrendingUp, Funnel, PackageSearch } from 'lucide-vue-next'
+import BackBtn from '@/components/common/BackBtn.vue'
+import { TrendingUp, Funnel, PackageSearch } from 'lucide-vue-next'
 
-const router = useRouter()
 const searchQuery = ref('')
 
 const popularSearches = [
@@ -82,10 +73,6 @@ const typeSearches = [
   'جام و ظروف',
 ]
 
-const handleClose = () => {
-  router.back()
-}
-
 const onChipSelect = (item) => {
   console.log('selected:', item)
   searchQuery.value = item
@@ -105,23 +92,6 @@ const handleBannerClick = () => {
     gap: var(--space-3);
     width: 100%;
     padding: var(--space-3);
-  }
-
-  &__back-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    border: none;
-    background: transparent;
-    color: var(--color-neutral-800);
-    cursor: pointer;
-  }
-
-  &__back-icon {
-    width: var(--icon-lg);
-    height: var(--icon-lg);
-    stroke-width: var(--stroke-2);
   }
 
   &__input {
