@@ -66,7 +66,6 @@
                         :title="article.title"
                         :summary="article.summary"
                         :date="article.date"
-                        @read-more="goToArticle"
                     />
                 </ItemsSection>
         </CommonSection>
@@ -135,14 +134,14 @@ const categories = [
 
 const products = [
     { id: 1, image: "src/assets/images/product1.png", title: "تنگ مس و مینیاتور", 
-    price: "8000000", old_price: "9000000"},
+    price: 8000000, old_price: 9000000},
     { id: 2, image: "src/assets/images/product2.png", title: "قندخوری فیروزه",
-        price: "5000000", old_price: "6500000"},
+        price: 5000000, old_price: 6500000},
     { id: 3, image: "src/assets/images/product3.png", title: "آجیل‌خوری خاتم",
-        price: "6500000", old_price: "7000000"},
+        price: 6500000, old_price: 7000000},
     { id: 4, image: "src/assets/images/product4.png", title: "جعبه خاتم",
-        price: "4000000"},
-]
+        price: 4000000},
+];
 
 const articles = [
     { id: 1, image: "src/assets/images/article1.png", 
@@ -160,7 +159,7 @@ const articles = [
         summary: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است",
         date: "۸ دی ۱۴۰۵"
     },
-]
+];
 
 const links = [
   { text: "محصولات جدید", href: "/products/new" },
