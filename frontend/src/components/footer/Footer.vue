@@ -76,6 +76,7 @@ defineProps({
   width: 100%;
   padding-block: var(--footer-padding-block);
   padding-inline: var(--footer-padding-inline);
+  padding-bottom: calc(78px + env(safe-area-inset-bottom));
   background-color: var(--footer-bg);
 }
 </style>
