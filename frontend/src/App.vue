@@ -1,23 +1,16 @@
 <template>
-  <RouterView v-slot="{ Component }">
-    <Transition :name="transitionName" mode="out-in">
-      <component :is="Component" />
-    </Transition>
-  </RouterView>
+  <div>
+    <AppLoader :show="ui.isRouteLoading" full-page />
+    <RouterView v-slot="{ Component }">
+        <component :is="Component" />
+    </RouterView>
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useUiStore } from '@/stores/ui'
+import AppLoader from '@/components/common/AppLoader.vue'
 
-const router = useRouter()
-const transitionName = ref('fade')
-
-router.beforeEach((to, from) => {
-  if (to.name === 'search' || from.name === 'search') {
-    transitionName.value = 'slide-down'
-  } else {
-    transitionName.value = 'fade'
-  }
-})
+const ui = useUiStore()
 </script>
