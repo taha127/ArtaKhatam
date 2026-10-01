@@ -1,6 +1,5 @@
 <template>
   <header :class="['header', className]">
-    <!-- Row 1, Col 1: Brand + Menu -->
     <div class="header__row">
       <button
         type="button"
@@ -29,7 +28,7 @@
         <h1 class="header__brand-text">Arta</h1>
       </span>
     </div>
-    <!-- Row 1, Col 2: Notification -->
+
     <button
       type="button"
       class="header__icon-btn"
@@ -38,91 +37,32 @@
       <Bell class="header__icon header__icon--bell" aria-hidden="true" />
     </button>
 
-    <!-- Row 2: Search (spans both columns) -->
     <div class="header__search">
-      <Input 
+      <Input
         variant="main-search"
-        @open-search="isSearchOpen = true"
+        @open-search="goToSearch"
       />
     </div>
-    <Transition name="search-overlay">
-      <SearchOverlay
-        v-if="isSearchOpen"
-        @close="isSearchOpen = false"
-      >
-        <SearchSection title="جستجوهای پرطرفدار" :icon="TrendingUp">
-          <Chip
-            :items="popularSearches"
-            @select="onChipSelect"
-          />
-        </SearchSection>
-        <SearchSection title="جستجو بر اساس" :icon="Funnel">
-          <Chip
-            :items="basedSearches"
-            @select="onChipSelect"
-          />
-        </SearchSection>
-        <SearchSection title="جستجو روی انواع آثار" :icon="PackageSearch">
-          <Chip
-            :items="typeSearches"
-            @select="onChipSelect"
-          />
-        </SearchSection>
-      </SearchOverlay>
-    </Transition>
   </header>
 </template>
 
 <script setup>
 import Input from "@/components/common/Input.vue";
-import SearchOverlay from "@/components/search/SearchOverlay.vue";
-import SearchSection from "@/components/search/SearchSection.vue";
-import Chip from "@/components/search/Chip.vue";
-
-import { Bell, Menu, TrendingUp, Funnel, PackageSearch, X } from "lucide-vue-next";
-import { ref } from 'vue'
+import { Bell, Menu, X } from "lucide-vue-next";
+import { useRouter } from "vue-router";
 
 defineProps({
   className: { type: String, default: "" },
   isMenuOpen: { type: Boolean, default: false },
 });
 
-const isSearchOpen = ref(false);
-
 defineEmits(["toggle-menu"]);
 
-const popularSearches = [
-  'قلمزنی و خاتم',
-  'جام مینیاتوری',
-  'گلدان خاتم',
-  'جعبه خاتم',
-  'قندان فیروزه‌کوبی'
-];
+const router = useRouter();
 
-const basedSearches = [
-  'ارزان‌ترین',
-  'محبوب‌ترین',
-  'جدیدترین',
-  'گران‌ترین',
-  'قابل سفارش دادن',
-  'پرفروش‌ترین',
-  'موجود',
-  'تخفیف‌دار',
-];
-
-const typeSearches = [
-  'شیرینی‌خوری',
-  'سینی',
-  'گلدان',
-  'شمعدان',
-  'ست‌های تزئینی',
-  'جام و ظروف',
-]
-
-const onChipSelect = (item) => {
-  console.log("selected:", item);
+const goToSearch = () => {
+  router.push({ name: "search" });
 };
-
 </script>
 
 <style scoped lang="scss">
