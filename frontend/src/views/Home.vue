@@ -187,10 +187,4 @@ const isMenuOpen = ref(false);
 </script>
 
 <style lang="scss" scoped>
-.home {
-    background-color: var(--color-background);
-    color: var(--color-neutral-900);
-    direction: rtl;
-    font-family: var(--font-family);
-}
 </style>
