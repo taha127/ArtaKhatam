@@ -23,10 +23,8 @@
         </Transition>
       </button>
 
-      <span class="header__brand">
-        <span class="header__brand-dot" aria-hidden="true"></span>
-        <h1 class="header__brand-text">Arta</h1>
-      </span>
+      <Brand />
+      
     </div>
 
     <button
@@ -48,6 +46,8 @@
 
 <script setup>
 import Input from "@/components/common/Input.vue";
+import Brand from "@/components/common/Brand.vue";
+
 import { Bell, Menu, X } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 
@@ -71,8 +71,6 @@ const goToSearch = () => {
   --header-gap-column: 0px;
   --header-icon-color: var(--color-neutral-800);
   --header-icon-padding: var(--space-1);
-  --header-brand-color: var(--color-copper-700);
-  --header-brand-dot-color: var(--color-turquoise-700);
 
   display: grid;
   position: relative;
@@ -122,27 +120,6 @@ const goToSearch = () => {
       width: var(--icon-lg);
       height: var(--icon-lg);
     }
-  }
-
-  &__brand {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-1);
-  }
-
-  &__brand-text {
-    font-family: var(--font-fraunces);
-    font-size: var(--text-fraunces-size);
-    color: var(--header-brand-color);
-  }
-
-  &__brand-dot {
-    width: var(--icon-xs);
-    height: var(--icon-xs);
-    flex-shrink: 0;
-    border-radius: var(--radius-full);
-    background-color: var(--header-brand-dot-color);
   }
 
   &__search {
