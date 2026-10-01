@@ -3,7 +3,7 @@
         <AnnouncementBar :messages="announcements_messages" :interval="4000" />
         <Header
           :is-menu-open="isMenuOpen"
-          @toggle-menu="isMenuOpen = !isMenuOpen" 
+          @toggle-menu="menuStore.toggleMenu" 
         />
         <MobileMenu v-model="isMenuOpen">
         </MobileMenu>
@@ -78,7 +78,7 @@
             :quick-links="links"
             :socials="socials"
         />
-        <BottomNav :tabs="tabs" v-model="activeTab" />
+        <BottomNav :tabs="tabs" />
     </main>
 </template>
 
@@ -100,7 +100,8 @@ import MobileMenu from '@/components/navigation/MobileMenu.vue';
 
 import { ShieldCheck, Truck, CircleDollarSign, ArrowLeft, Home, Store, ShoppingBag, Heart, User } from "lucide-vue-next";
 import { faWhatsapp, faTelegram, faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { ref } from 'vue';
+import { useMenuStore } from '@/stores/menu';
+import { storeToRefs } from 'pinia';
 
 const announcements_messages = [
     "ارسال رایگان برای سفارش‌های بالای ۵۰ میلیون تومان",
@@ -182,7 +183,8 @@ const tabs = [
   { id: "account", icon: User, label: "حساب من" },
 ];
 
-const isMenuOpen = ref(false);
+const menuStore = useMenuStore()
+const { isMenuOpen } = storeToRefs(menuStore);
 
 </script>
 
