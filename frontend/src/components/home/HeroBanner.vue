@@ -39,7 +39,6 @@ import BannerSlide from "./BannerSlide.vue";
 import SliderDots from "../common/SliderDots.vue";
 
 const props = defineProps({
-  // [{ image, title, subtitle, alt }, ...]
   slides: {
     type: Array,
     required: true,
@@ -63,6 +62,7 @@ const props = defineProps({
 
 const containerRef = ref(null);
 const containerWidth = ref(0);
+const isAnimating = ref(false);
 
 const N = computed(() => props.slides.length);
 
@@ -84,6 +84,7 @@ const isDragging = ref(false);
 const isJumping = ref(false);
 const dragOffset = ref(0);
 
+
 let timer = null;
 let resizeObserver = null;
 let startX = 0;
@@ -94,50 +95,69 @@ const translateX = computed(() =>
   isDragging.value ? restTranslate.value + dragOffset.value : restTranslate.value,
 );
 
-const trackStyle = computed(() => ({
-  transform: `translateX(${translateX.value}px)`,
-  transition:
-    isDragging.value || isJumping.value ? "none" : "transform 1.5s cubic-bezier(0.22, 1, 0.36, 1)",
-}));
+const trackStyle = computed(() => {
+  if (!containerWidth.value) {
+    return { transform: 'translateX(0)', transition: 'none' }
+  }
+
+  return {
+    transform: `translateX(${translateX.value}px)`,
+    transition:
+      isDragging.value || isJumping.value
+        ? 'none'
+        : 'transform 0.5s cubic-bezier(1, 0.2, 0.1, 0.1)',
+  }
+})
 
 const measure = () => {
-  if (!containerRef.value) return;
-  containerWidth.value = containerRef.value.offsetWidth;
-};
+  if (!containerRef.value) return
+  const w = containerRef.value.offsetWidth
+  if (w > 0) containerWidth.value = w
+}
 
 const goTo = (index) => {
-  extendedIndex.value = index + 1;
-  restartAutoplay();
-};
+  if (isAnimating.value || N.value < 2) return
+  isAnimating.value = true
+  extendedIndex.value = index + 1
+  restartAutoplay()
+}
 
 const next = () => {
-  extendedIndex.value += 1;
-};
+  if (isAnimating.value || N.value < 2) return
+  isAnimating.value = true
+  extendedIndex.value += 1
+}
 
 const prev = () => {
-  extendedIndex.value -= 1;
-};
+  if (isAnimating.value || N.value < 2) return
+  isAnimating.value = true
+  extendedIndex.value -= 1
+}
 
 const jumpTo = (targetExtendedIndex) => {
-  isJumping.value = true;
-  extendedIndex.value = targetExtendedIndex;
+  isJumping.value = true
+  extendedIndex.value = targetExtendedIndex
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      isJumping.value = false;
-    });
-  });
-};
+      isJumping.value = false
+      isAnimating.value = false
+    })
+  })
+}
 
 const onTransitionEnd = (event) => {
-  if (event.propertyName !== "transform") return;
+  if (event.propertyName !== 'transform') return
+  if (event.target !== event.currentTarget) return
 
-  if (extendedIndex.value === 0) {
-    jumpTo(N.value);
-  } else if (extendedIndex.value === N.value + 1) {
-    jumpTo(1);
+  if (extendedIndex.value <= 0) {
+    jumpTo(N.value)
+  } else if (extendedIndex.value >= N.value + 1) {
+    jumpTo(1)
+  } else {
+    isAnimating.value = false
   }
-};
+}
 
 const startAutoplay = () => {
   stopAutoplay();
@@ -196,8 +216,6 @@ const onPointerUp = () => {
   restartAutoplay();
 };
 
-/* ----------------------------------------------------------------------- */
-
 watch(
   () => props.slides,
   () => {
@@ -207,17 +225,32 @@ watch(
   },
 );
 
+const onVisibilityChange = () => {
+  if (document.hidden) {
+    stopAutoplay()
+  } else {
+    nextTick(() => {
+      measure()
+      if (extendedIndex.value <= 0) jumpTo(N.value)
+      else if (extendedIndex.value >= N.value + 1) jumpTo(1)
+      startAutoplay()
+    })
+  }
+}
+
 onMounted(() => {
   measure();
   startAutoplay();
 
   resizeObserver = new ResizeObserver(measure);
-  resizeObserver.observe(containerRef.value);
+  if (containerRef.value) resizeObserver.observe(containerRef.value)
+  document.addEventListener('visibilitychange', onVisibilityChange)
 });
 
 onUnmounted(() => {
   stopAutoplay();
   resizeObserver?.disconnect();
+  document.removeEventListener('visibilitychange', onVisibilityChange)
 });
 </script>
 
