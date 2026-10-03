@@ -35,3 +35,45 @@
     inset -1px 0 0 0 rgba(255, 255, 255, 0.5),
     inset -1px 0 1px 0 rgba(255, 255, 255, 0.5);
 }
+
+@mixin form-auth() {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  padding-inline: var(--space-2);
+  padding-block: var(--space-3);
+  border: var(--stroke-2) solid var(--color-gold-700);
+  border-radius: var(--radius-2xl);
+  width: 100%;
+
+  &__submit-btn {
+    width: 100%;
+    background-color: var(--color-gold-700);
+    border: var(--stroke-2) solid var(--color-neutral-300);
+    border-radius: var(--radius-xl);
+  }
+
+  &__submit-btn:hover {
+    background-color: var(--color-gold-800) !important;
+    color: var(--color-neutral-0) !important;
+    --button-icon-color: var(--color-neutral-0) !important;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--text-h5-size);
+    font-weight: var(--text-h5-weight);
+    text-align: center;
+    color: var(--color-gold-800);
+  }
+
+  &__description {
+    margin: 0;
+    font-size: var(--text-caption-md-size);
+    font-weight: var(--text-caption-md-weight);
+    text-align: center;
+    color: var(--color-gold-700);
+  }
+
+}
