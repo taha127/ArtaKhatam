@@ -82,12 +82,17 @@
             </button>
 
         </div>
+        <p v-if="error" class="input__error">
+          {{ error }}
+        </p>
     </div>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import { Search, Eye, EyeOff, } from "lucide-vue-next";
+import { computed, ref } from "vue"
+import { Search, Eye, EyeOff, } from "lucide-vue-next"
+
+import { toPersianDigits, toEnglishDigits } from '@/utils/digits'
 
 const props = defineProps({
     modelValue: {
@@ -114,7 +119,7 @@ const props = defineProps({
         type: String,
         default: "default",
         validator: (value) =>
-            ["default", "search", "main-search", "password"].includes(value),
+            ["default", "search", "main-search", "password", "error"].includes(value),
     },
 
     state: {
@@ -123,64 +128,75 @@ const props = defineProps({
         validator: (value) =>
             ["enabled", "focused", "disabled"].includes(value),
     },
-});
 
-const emit = defineEmits(["update:modelValue", "open-search"]);
+    error: {
+      type: String,
+      default: '',
+    },
+})
+
+const emit = defineEmits(["update:modelValue", "open-search"])
 
 const showPassword = ref(false);
 
 const hasLabel = computed(() => {
-  return (
-    props.label &&
-    props.variant !== "search" &&
-    props.variant !== "main-search"
-  );
-});
+
+    return (
+        props.label &&
+        props.variant !== "search" &&
+        props.variant !== "main-search"
+    )
+})
 
 const showMainSearchPlaceholder = computed(() => {
   return (
     props.variant === "main-search" &&
     !props.modelValue
-  );
-});
+  )
+})
 
 const inputPlaceholder = computed(() => {
-  if (props.variant === "main-search") {
-    return "";
-  }
+    if (props.variant === "main-search") {
+        return ""
+    }
 
-  return props.placeholder;
-});
+    return props.placeholder
+})
 
 const ariaLabel = computed(() => {
-  if (props.variant === "main-search") {
-    return "جستجو در آرتا";
-  }
+    if (props.variant === "main-search") {
+        return "جستجو در آرتا";
+    }
 
-  return props.label || undefined;
-});
+    return props.label || undefined
+})
 
 const inputType = computed(() => {
     if (props.variant === "password") {
-        return showPassword.value ? "text" : "password";
+        return showPassword.value ? "text" : "password"
     }
 
-    return "text";
-});
+    return "text"
+})
 
 const handleInput = (event) => {
-    emit("update:modelValue", event.target.value);
-};
+    
+    let value = event.target.value
+
+    value = toPersianDigits(value)
+    event.target.value = value
+    emit("update:modelValue", value)
+}
 
 const togglePassword = () => {
-    showPassword.value = !showPassword.value;
-};
+    showPassword.value = !showPassword.value
+}
 
 const handleMainSearchClick = () => {
-  if (props.variant === "main-search" && props.state !== "disabled") {
-    emit("open-search");
-  }
-};
+    if (props.variant === "main-search" && props.state !== "disabled") {
+        emit("open-search")
+    }
+}
 
 </script>
 
@@ -281,7 +297,8 @@ const handleMainSearchClick = () => {
     &--password {
         &:focus-within {
             --input-border: var(--color-turquoise-700);
-            --input-gap: 0px;
+            transition: border-color 0.5s ease, translate 1s ease;
+            translate: 0 -1px;
         }
     }
 
@@ -329,7 +346,7 @@ const handleMainSearchClick = () => {
 
     /* Search */
 
-    &--search{
+    &--search {
         --input-border: var(--color-neutral-600);
         --stroke-border: var(--stroke-1);
         --input-placeholder: var(--color-neutral-500);
@@ -337,6 +354,17 @@ const handleMainSearchClick = () => {
         .input__wrapper {
             gap: var(--space-1);
         }
+    }
+
+    &__error {
+        padding-right: var(--space-1);
+        color: #ff383c;
+        font-size: var(--text-caption-md-size);
+        font-weight: var(--text-caption-md-weight);
+    }
+
+    &--error {
+        --input-border: #ff383c;
     }
 }
 </style>
