@@ -12,12 +12,17 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/LoginView.vue'),
+    component: () => import('@/views/auth/LoginView.vue'),
+  },
+  {
+    path: '/otp',
+    name: 'otp',
+    component: () => import('@/views/auth/OtpView.vue'),
   },
   {
     path: '/account',
     name: 'account',
-    component: () => import('@/views/AccountView.vue'),
+    component: () => import('@/views/auth/AccountView.vue'),
     // بعداً می‌توانی meta: { requiresAuth: true } بگذاری
   },
   //   { path: '/shop', name: 'shop', component: ShopView },
